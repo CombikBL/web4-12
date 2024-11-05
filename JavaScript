@@ -1,0 +1,28 @@
+const apiKey = 'YOUR_API_KEY'; // Замініть на свій API ключ
+
+function getWeather(city) {
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      const temperature = data.main.temp;
+      const humidity = data.main.humidity;
+      const windSpeed = data.wind.speed;
+
+      // Оновлюємо HTML елементи
+      document.getElementById('temperature').textContent = `${temperature} °C`;
+      document.getElementById('humidity').textContent = `${humidity}%`;
+      document.getElementById('windSpeed').textContent = `${windSpeed} m/s`;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+// Приклад використання функції при натисканні на кнопку
+const searchButton = document.getElementById('searchButton');
+searchButton.addEventListener('click', () => {
+  const city = document.getElementById('cityInput').value;
+  getWeather(city);
+});
